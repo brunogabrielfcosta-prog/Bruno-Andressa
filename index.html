@@ -366,8 +366,8 @@ function renderInfo(){
   $("#when").textContent = quando + " · Jantar de casamento";
   $("#foot-when").textContent = quando;
   const hm = /(\d{1,2})\s*[h:]\s*(\d{2})?/i.exec(INFO.horario||"");
-  if(hm) alvo.setHours(Math.min(23,Number(hm[1])), Number(hm[2]||0), 0, 0);
-  ALVO = alvo;
+  // horário de Cuiabá (UTC-4), igual pra convidados de qualquer fuso
+  ALVO = new Date(Date.UTC(alvo.getFullYear(), alvo.getMonth(), alvo.getDate(), (hm?Math.min(23,Number(hm[1])):0)+4, hm?Number(hm[2]||0):0));
   const [yy,mm,ddd] = [alvo.getFullYear(), alvo.getMonth()+1, alvo.getDate()];
   $("#date-big").textContent = `${String(ddd).padStart(2,"0")}/${String(mm).padStart(2,"0")}/${yy}`;
   tick();
