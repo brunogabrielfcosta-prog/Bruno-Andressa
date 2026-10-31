@@ -44,8 +44,10 @@ a{color:var(--moss)}
 .hero h1{font-size:clamp(46px,7vw,80px);font-weight:500;letter-spacing:-.01em;color:var(--deep)}
 .hero h1 em{font-style:italic;color:var(--sand)}
 .hero .when{font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--deep)}
-.count{display:flex;gap:10px}
-.count div{min-width:74px;padding:8px 10px;border:1px solid rgba(245,242,233,.35);border-radius:12px;backdrop-filter:blur(4px);background:rgba(245,242,233,.06)}
+.date-big{font-family:var(--display);font-size:clamp(34px,5vw,48px);font-weight:500;letter-spacing:.06em;line-height:1;color:var(--off);text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.count{display:flex;gap:8px}
+.count .today{font-family:var(--display);font-size:26px;padding:8px 16px}
+.count div{min-width:70px;padding:8px 8px;border:1px solid rgba(245,242,233,.35);border-radius:12px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);background:rgba(23,29,13,.28)}
 .count b{display:block;font-family:var(--display);font-size:30px;font-weight:500;line-height:1}
 .count span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
 .hero-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -152,9 +154,11 @@ footer small{display:block;margin-top:10px;font-size:13px;opacity:.75}
   section{padding:64px 0}
   .card{padding:20px}
   .row2{grid-template-columns:1fr}
-  .count div{min-width:64px}
   .crest-mark{width:68px}
-  .hero .count{display:none}
+  .count div{min-width:0;flex:1;padding:6px 4px}
+  .count{width:100%;max-width:300px}
+  .count b{font-size:24px}
+  .count span{font-size:10px}
   .hero h1{font-size:44px}
   .gifts{grid-template-columns:1fr 1fr;gap:10px}
   .gift .bd{padding:12px}
@@ -178,7 +182,8 @@ footer small{display:block;margin-top:10px;font-size:13px;opacity:.75}
     <div class="when" id="when">Julho de 2027 · Jantar de casamento</div>
    </div>
    <div class="hero-bottom">
-    <div class="count num" id="count" aria-label="Contagem regressiva"></div>
+    <div class="date-big num" id="date-big">19/07/2027</div>
+    <div class="count num" id="count" role="timer" aria-label="Contagem regressiva para o casamento"></div>
     <div class="hero-actions">
       <a class="btn light" href="#presenca">Confirmar presença</a>
       <a class="btn outline-light" href="#presentes">Lista de presentes</a>
@@ -342,6 +347,17 @@ function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show")
 function safeUrl(u){ try{ const x=new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; }catch(e){ return ""; } }
 
 /* ---------- Informações e contagem ---------- */
+let ALVO = new Date(2027,6,19);
+function tick(){
+  let ms = ALVO - new Date();
+  if(ms<=0){ $("#count").innerHTML = `<div class="today">Hoje é o grande dia!</div>`; return; }
+  const dias=Math.floor(ms/86400000); ms-=dias*86400000;
+  const h=Math.floor(ms/3600000); ms-=h*3600000;
+  const m=Math.floor(ms/60000); const sg=Math.floor((ms-m*60000)/1000);
+  const p=n=>String(n).padStart(2,"0");
+  $("#count").innerHTML = `<div><b>${dias}</b><span>dias</span></div><div><b>${p(h)}</b><span>horas</span></div><div><b>${p(m)}</b><span>min</span></div><div><b>${p(sg)}</b><span>seg</span></div>`;
+}
+setInterval(tick, 1000);
 function renderInfo(){
   const d = INFO.dataCasamento, prazo = INFO.prazo || "2027-07";
   let quando, alvo;
@@ -349,12 +365,12 @@ function renderInfo(){
   else { const [y,m]=prazo.split("-").map(Number); alvo=new Date(y,m-1,1); quando = `${MESES[m-1][0].toUpperCase()+MESES[m-1].slice(1)} de ${y}`; }
   $("#when").textContent = quando + " · Jantar de casamento";
   $("#foot-when").textContent = quando;
-  const hoje=new Date(); hoje.setHours(0,0,0,0);
-  const dias=Math.round((alvo-hoje)/86400000);
-  if(dias>0){
-    const meses=Math.floor(dias/30.44);
-    $("#count").innerHTML = d ? `<div><b>${dias}</b><span>dias</span></div>` : `<div><b>${meses}</b><span>${meses===1?"mês":"meses"}</span></div><div><b>${dias}</b><span>dias</span></div>`;
-  } else $("#count").innerHTML = "";
+  const hm = /(\d{1,2})\s*[h:]\s*(\d{2})?/i.exec(INFO.horario||"");
+  if(hm) alvo.setHours(Math.min(23,Number(hm[1])), Number(hm[2]||0), 0, 0);
+  ALVO = alvo;
+  const [yy,mm,ddd] = [alvo.getFullYear(), alvo.getMonth()+1, alvo.getDate()];
+  $("#date-big").textContent = `${String(ddd).padStart(2,"0")}/${String(mm).padStart(2,"0")}/${yy}`;
+  tick();
   if(INFO.recado) $("#recado").textContent = INFO.recado;
   const dataTxt = d ? `${DIAS[alvo.getDay()].replace(/^./,c=>c.toUpperCase())}` : "Dia confirmado em breve";
   const maps = safeUrl(INFO.mapsLink);
