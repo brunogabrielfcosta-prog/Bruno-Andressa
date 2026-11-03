@@ -178,10 +178,10 @@ footer small{display:block;margin-top:10px;font-size:13px;opacity:.75}
    <div class="hero-top">
     <svg viewBox="170 175 260 205" class="crest-mark" role="img" aria-label="Monograma B e A"><text x="300" y="300" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="150" font-weight="500" fill="currentColor">B<tspan font-style="italic" font-size="105" fill="#d9c08c" dx="3" dy="-4">&amp;</tspan><tspan dx="3" dy="4">A</tspan></text><line x1="195.0" y1="360" x2="405.0" y2="360" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><ellipse cx="277.0" cy="353.0" rx="11" ry="4" transform="rotate(35 277.0 353.0)" fill="currentColor"/><ellipse cx="277.0" cy="367.0" rx="11" ry="4" transform="rotate(-35 277.0 367.0)" fill="currentColor"/><ellipse cx="260.0" cy="353.0" rx="11" ry="4" transform="rotate(35 260.0 353.0)" fill="currentColor"/><ellipse cx="260.0" cy="367.0" rx="11" ry="4" transform="rotate(-35 260.0 367.0)" fill="currentColor"/><ellipse cx="243.0" cy="353.0" rx="11" ry="4" transform="rotate(35 243.0 353.0)" fill="currentColor"/><ellipse cx="243.0" cy="367.0" rx="11" ry="4" transform="rotate(-35 243.0 367.0)" fill="currentColor"/><ellipse cx="226.0" cy="353.0" rx="11" ry="4" transform="rotate(35 226.0 353.0)" fill="currentColor"/><ellipse cx="226.0" cy="367.0" rx="11" ry="4" transform="rotate(-35 226.0 367.0)" fill="currentColor"/><ellipse cx="209.0" cy="353.0" rx="11" ry="4" transform="rotate(35 209.0 353.0)" fill="currentColor"/><ellipse cx="209.0" cy="367.0" rx="11" ry="4" transform="rotate(-35 209.0 367.0)" fill="currentColor"/><ellipse cx="323.0" cy="353.0" rx="11" ry="4" transform="rotate(-35 323.0 353.0)" fill="currentColor"/><ellipse cx="323.0" cy="367.0" rx="11" ry="4" transform="rotate(35 323.0 367.0)" fill="currentColor"/><ellipse cx="340.0" cy="353.0" rx="11" ry="4" transform="rotate(-35 340.0 353.0)" fill="currentColor"/><ellipse cx="340.0" cy="367.0" rx="11" ry="4" transform="rotate(35 340.0 367.0)" fill="currentColor"/><ellipse cx="357.0" cy="353.0" rx="11" ry="4" transform="rotate(-35 357.0 353.0)" fill="currentColor"/><ellipse cx="357.0" cy="367.0" rx="11" ry="4" transform="rotate(35 357.0 367.0)" fill="currentColor"/><ellipse cx="374.0" cy="353.0" rx="11" ry="4" transform="rotate(-35 374.0 353.0)" fill="currentColor"/><ellipse cx="374.0" cy="367.0" rx="11" ry="4" transform="rotate(35 374.0 367.0)" fill="currentColor"/><ellipse cx="391.0" cy="353.0" rx="11" ry="4" transform="rotate(-35 391.0 353.0)" fill="currentColor"/><ellipse cx="391.0" cy="367.0" rx="11" ry="4" transform="rotate(35 391.0 367.0)" fill="currentColor"/><circle cx="300" cy="360" r="4" fill="#d9c08c"/></svg>
     <h1>Bruno <em>&amp;</em> Andressa</h1>
-    <div class="when" id="when">14 de julho de 2027 · Casamento civil</div>
+    <div class="when" id="when">17 de julho de 2027 · Casamento civil</div>
    </div>
    <div class="hero-bottom">
-    <div class="date-big num" id="date-big">14/07/2027</div>
+    <div class="date-big num" id="date-big">17/07/2027</div>
     <div class="count num" id="count" role="timer" aria-label="Contagem regressiva para o casamento"></div>
     <div class="hero-actions">
       <a class="btn light" href="#presenca">Confirmar presença</a>
@@ -346,7 +346,7 @@ function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show")
 function safeUrl(u){ try{ const x=new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; }catch(e){ return ""; } }
 
 /* ---------- Informações e contagem ---------- */
-let ALVO = new Date(2027,6,14);
+let ALVO = new Date(2027,6,17);
 function tick(){
   let ms = ALVO - new Date();
   if(ms<=0){ $("#count").innerHTML = `<div class="today">Hoje é o grande dia!</div>`; return; }
